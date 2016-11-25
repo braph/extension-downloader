@@ -1,19 +1,24 @@
+#!/usr/bin/env python
+
 import requests;
-import re;
 import sys;
 import os;
 
 PY3 = sys.version_info[0] == 3
 if PY3:
     from urllib.request import urlretrieve
+    from urllib.parse import urlparse
 else:
     from urllib import urlretrieve
+    from urlparse import urlparse
+
+
 links = sys.argv[1:];
 downloadlink = "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=47.0&x=id%3D{}%26installsource%3Dondemand%26uc"
 extensionids = [];
-regexx = re.compile("http[s]?.+\/(?P<lastpart>.+)");
 for link in links:
-    extensionids.append(regexx.search(link).group("lastpart"));
+    urlinfo = urlparse(link)
+    extensionids.append(os.path.basename(urlinfo.path))
 
 for extensionid in extensionids:
     link = downloadlink.format(extensionid);

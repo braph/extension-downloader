@@ -24,5 +24,4 @@ for extensionid in extensionids:
     link = downloadlink.format(extensionid);
     extensiondownload = requests.get(link,headers={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"}).url;
     urlretrieve(extensiondownload,"/tmp/{}.crx".format(extensionid));
-    os.system("inox /tmp/%s.crx" % extensionid);
 
